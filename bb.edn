@@ -5,6 +5,7 @@
                 (shell cmd))
          server ahoy.server/-main
          cli ahoy.cli/-main
+         wrap ahoy.cli/wrap-m3u8
          encode (let [encoder (java.util.Base64/getEncoder)]
                    (->> *command-line-args*
                         first

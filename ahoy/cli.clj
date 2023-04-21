@@ -6,6 +6,11 @@
     [ahoy.html :refer [get-match]]
     [ahoy.rest :refer [fetch-matches fetch-and-get-m3u8]]))
 
+
+(defn wrap-m3u8 [hls]
+  (spit "m3u8.html"
+        (get-match hls)))
+
 (defn -main [& _]
   (let [choices (->> (fetch-matches)
                      (reduce #(assoc %1
