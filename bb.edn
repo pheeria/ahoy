@@ -12,11 +12,4 @@
                         .getBytes
                         (.encodeToString encoder)
                         (str "data:text/html;base64,") 
-                        println))
-         data (let [prefix "\"data:text/html;base64,\""
-                    file   (str "\"" (first *command-line-args*) "\"")
-                    cmd    (str "{ echo -n " prefix ";"
-                             " cat " file " | base64 }"
-                             " | pbcopy")]
-                 (println cmd)
-                 (shell "bash -e -c -x " cmd))}}
+                        println))}}
