@@ -4,16 +4,20 @@
   (:require 
     [ahoy.all :refer [all-matches]]
     [ahoy.match :refer [the-match]]
+    [ahoy.html :refer [get-index get-match]]
+    [cheshire.core :refer [parse-string]]
     [org.httpkit.server :refer [run-server]]))
 
-(defn not-found [_]
-  {:status 404
-   :body "Not Found"})
+(def matches
+  (->> (parse-string (slurp "https://varline.store/api/matchlist") true)
+     (filter #(= "Футбол" (:sport %)))
+     (remove #(re-find #"Russia" (:league_en %)))
+     (map #(select-keys % [:stream :home_en :away_en :home_logo :away_logo]))))
 
 (defn home [_]
   {:status 200
    :headers {"Content-Type" "text/html"}
-   :body (str (all-matches))})
+   :body (get-index matches)})
 
 (defn game [stream]
   {:status 200
@@ -28,7 +32,7 @@
     (handler req)))
 
 (defn -main [& _]
-  (println "Starting...")
-    (run-server #'app {:port 6900})
-    @(promise))
+  (println "Server started")
+  (run-server #'app {:port 6900})
+  @(promise))
 
