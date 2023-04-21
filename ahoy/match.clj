@@ -1,6 +1,6 @@
 #!/usr/bin/env bb
 
-(ns match
+(ns ahoy.match
   (:require 
     [bblgum.core :refer [gum]]
     [hiccup2.core :refer [html]]

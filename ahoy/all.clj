@@ -1,6 +1,6 @@
 #!/usr/bin/env bb
 
-(ns all
+(ns ahoy.all
   (:require 
     [hiccup2.core :refer [html]]
     [cheshire.core :refer [parse-string]]))

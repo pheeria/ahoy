@@ -1,6 +1,6 @@
 #!/usr/bin/env bb
 
-(ns cli
+(ns ahoy.cli
   (:require 
     [bblgum.core :refer [gum]]
     [hiccup2.core :refer [html]]

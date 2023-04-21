@@ -1,9 +1,9 @@
 #!/usr/bin/env bb
 
-(ns server
+(ns ahoy.server
   (:require 
-    [all :refer [all-matches]]
-    [match :refer [the-match]]
+    [ahoy.all :refer [all-matches]]
+    [ahoy.match :refer [the-match]]
     [org.httpkit.server :refer [run-server]]))
 
 (defn not-found [_]
