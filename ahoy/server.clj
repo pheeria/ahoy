@@ -2,32 +2,31 @@
 
 (ns ahoy.server
   (:require 
-    [ahoy.all :refer [all-matches]]
-    [ahoy.match :refer [the-match]]
     [ahoy.html :refer [get-index get-match]]
-    [cheshire.core :refer [parse-string]]
+    [ahoy.rest :refer [fetch-matches fetch-and-get-m3u8]]
     [org.httpkit.server :refer [run-server]]))
 
-(def matches
-  (->> (parse-string (slurp "https://varline.store/api/matchlist") true)
-     (filter #(= "Футбол" (:sport %)))
-     (remove #(re-find #"Russia" (:league_en %)))
-     (map #(select-keys % [:stream :home_en :away_en :home_logo :away_logo]))))
+
+(defn wrap-with-200 [page]
+  {:status 200
+   :headers {"Content-Type" "text/html"}
+   :body page})
 
 (defn home [_]
-  {:status 200
-   :headers {"Content-Type" "text/html"}
-   :body (get-index matches)})
+  (->> (fetch-matches)
+       get-index
+       wrap-with-200))
 
-(defn game [stream]
-  {:status 200
-   :headers {"Content-Type" "text/html"}
-   :body (str (the-match (subs (:uri stream) 1)))})
+(defn match [req]
+  (->> (subs (:uri req) 1)
+       fetch-and-get-m3u8
+       get-match
+       wrap-with-200))
 
 (defn app [req]
   (let [uri (:uri req)
         handler (if (re-find #"http" uri)
-                  game
+                  match
                   home)]
     (handler req)))
 
@@ -35,4 +34,3 @@
   (println "Server started")
   (run-server #'app {:port 6900})
   @(promise))
-
