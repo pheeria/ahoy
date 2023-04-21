@@ -7,22 +7,18 @@
     [ahoy.rest :refer [fetch-matches fetch-and-get-m3u8]]))
 
 (defn -main [& _]
-(let [choices
-  (->> (fetch-matches)
-     (reduce #(assoc %1
-                     (str (:home_en %2) " - " (:away_en %2))
-                     (:stream %2))
-             {}))
-title
-  (->> (keys choices)
-       (gum :choose)
-       :result
-       first)
+  (let [choices (->> (fetch-matches)
+                     (reduce #(assoc %1
+                                     (str (:home_en %2) " - " (:away_en %2))
+                                     (:stream %2))
+                             {}))
 
-hls
-  (->> (get choices title)
-       fetch-and-get-m3u8)]
+        title   (->> (keys choices)
+                     (gum :choose)
+                     :result
+                     first)
 
-(spit (str title ".html")
-      (get-match hls))
-))
+        hls     (->> (get choices title)
+                     fetch-and-get-m3u8)]
+  (spit (str title ".html")
+        (get-match hls))))
