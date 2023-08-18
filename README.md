@@ -19,9 +19,13 @@ bb server
 bb cli
 ```
 
-The generated file can also be encoded into a data URL:
+- The generated file can also be encoded into a data URL:
 ```sh
 bb encode <FILENAME>
 bb encode <FILENAME> | pbcopy
 ```
 
+- To wrap an existing stream:
+```sh
+bb wrap <STREAM>
+```
