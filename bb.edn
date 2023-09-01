@@ -1,6 +1,6 @@
 {:paths ["."]
  :deps {io.github.lispyclouds/bblgum {:git/sha "b450a7608ef44267b52674011721856d77007fa0"}}
- :tasks {repl (let [port (slurp ".nrepl-port")
+ :tasks {brepl (let [port (slurp ".nrepl-port")
                     cmd (str "bb --nrepl-server " port)]
                 (shell cmd))
          server ahoy.server/-main
