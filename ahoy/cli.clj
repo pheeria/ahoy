@@ -1,9 +1,11 @@
 #!/usr/bin/env bb
+(require '[babashka.deps :as deps])
+(deps/add-deps '{:deps {io.github.lispyclouds/bblgum {:git/sha "b450a7608ef44267b52674011721856d77007fa0"}}})
 
 (ns ahoy.cli
   (:require 
-    [bblgum.core :refer [gum]]
     [ahoy.html :refer [get-match]]
+    [bblgum.core :refer [gum]]
     [ahoy.rest :refer [fetch-matches fetch-and-get-m3u8]]))
 
 
