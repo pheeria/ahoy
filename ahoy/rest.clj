@@ -2,12 +2,13 @@
 
 (ns ahoy.rest
   (:require 
-    [cheshire.core :refer [parse-string]]))
+    [cheshire.core :refer [parse-string]]
+    [ahoy.config :refer [url]]))
 
 
 (defn fetch-matches []
   (let [today (.getDayOfYear (java.time.LocalDateTime/now))]
-    (->> (parse-string (slurp "https://varline.store/api/matchlist") true)
+    (->> (parse-string (slurp url) true)
        (filter #(= "Футбол" (:sport %)))
        (filter #(= today (.getDayOfYear (java.time.ZonedDateTime/parse (:start %)))))
        (remove #(re-find #"Russia|Brasil|Turkey|Saudi|Austria|Ukraine" (:league_en %)))

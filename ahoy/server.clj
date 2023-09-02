@@ -4,6 +4,7 @@
   (:require 
     [ahoy.html :refer [get-index get-match]]
     [ahoy.rest :refer [fetch-matches fetch-and-get-m3u8]]
+    [ahoy.config :refer [port]]
     [org.httpkit.server :refer [run-server]]))
 
 
@@ -32,5 +33,5 @@
 
 (defn -main [& _]
   (println "Server started")
-  (run-server #'app {:port 6900})
+  (run-server #'app {:port port})
   @(promise))
