@@ -6,7 +6,7 @@
   (:require 
     [ahoy.html :refer [get-match]]
     [bblgum.core :refer [gum]]
-    [ahoy.rest :refer [fetch-matches fetch-and-get-m3u8]]))
+    [ahoy.rest :refer [fetch-matches]]))
 
 
 (defn wrap-m3u8 [hls]
@@ -17,7 +17,7 @@
   (let [choices (->> (fetch-matches)
                      (reduce #(assoc %1
                                      (str (:home_en %2) " - " (:away_en %2))
-                                     (:stream %2))
+                                     (:stream_smart %2))
                              {}))
 
         title   (->> (keys choices)
@@ -25,7 +25,6 @@
                      :result
                      first)
 
-        hls     (->> (get choices title)
-                     fetch-and-get-m3u8)]
+        hls     (get choices title)]
   (spit (str title ".html")
         (get-match hls))))
