@@ -10,7 +10,10 @@
 
 (defn wrap-with-200 [page]
   {:status 200
-   :headers {"Content-Type" "text/html"}
+   :headers {
+      "Content-Type" "text/html"
+      "Cache-Control" "max-age=7200"
+    }
    :body page})
 
 (defn home [_]
