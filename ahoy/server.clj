@@ -38,7 +38,7 @@
         uri (if (str/starts-with? raw-uri "/")
                 (str/replace-first raw-uri "/" "")
                 raw-uri)]
-    (println uri)
+    (println req)
     (cond 
       (str/includes? uri "m3u8") (m3u8 uri)
       (str/includes? uri "http") (match uri)
