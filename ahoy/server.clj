@@ -4,7 +4,7 @@
   (:require 
     [ahoy.html :refer [get-index get-match]]
     [ahoy.rest :refer [fetch-matches fetch-and-get-m3u8]]
-    [ahoy.config :refer [port]]
+    [ahoy.config :refer [port url]]
     [org.httpkit.server :refer [run-server]]))
 
 
@@ -14,7 +14,7 @@
    :body page})
 
 (defn home [_]
-  (->> (fetch-matches)
+  (->> (fetch-matches url)
        get-index
        wrap-with-200))
 

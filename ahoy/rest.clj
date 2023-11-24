@@ -2,11 +2,9 @@
 
 (ns ahoy.rest
   (:require 
-    [cheshire.core :refer [parse-string]]
-    [ahoy.config :refer [url]]))
+    [cheshire.core :refer [parse-string]]))
 
-
-(defn fetch-matches []
+(defn fetch-matches [url]
   (let [today (.getDayOfYear (java.time.LocalDateTime/now))]
     (->> (parse-string (slurp url) true)
        (filter #(= "Футбол" (:sport %)))
