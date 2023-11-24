@@ -18,7 +18,7 @@
 (defn unordered-list [matches]
   [:ul
    (map
-     (fn [{stream :stream home_en :home_en away_en :away_en  home_logo :home_logo away_logo :away_logo}]
+     (fn [{stream :stream_smart home_en :home_en away_en :away_en  home_logo :home_logo away_logo :away_logo}]
        [:li
         [:a {:href (str "/" stream)}
          [:img {:src home_logo :alt away_en}]
@@ -33,4 +33,6 @@
        (replace index-page #"<REPLACE>")))
 
 (defn get-match [match]
-  (replace match-page #"<REPLACE>" match))
+  (if (nil? match)
+        match-page
+        (replace match-page #"<REPLACE>" match)))
