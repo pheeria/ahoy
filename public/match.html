@@ -25,6 +25,28 @@
           var hls = new Hls();
           hls.loadSource(videoSrc);
           hls.attachMedia(video);
+
+          hls.on(Hls.Events.ERROR, function (event, data) {
+            if (data.fatal) {
+              switch (data.type) {
+                case Hls.ErrorTypes.MEDIA_ERROR:
+                  console.log('fatal media error encountered, try to recover');
+                  hls.recoverMediaError();
+                  break;
+                case Hls.ErrorTypes.NETWORK_ERROR:
+                  console.error('fatal network error encountered', data);
+                  hls.stopLoad();
+                  setTimeout(() => {
+                    hls.startLoad();
+                  }, 1000);
+                  break;
+                default:
+                  hls.destroy();
+                  break;
+              }
+            }
+          }
+        );
       }
   </script>
 </body>
