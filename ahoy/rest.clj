@@ -9,7 +9,7 @@
     (->> (parse-string (slurp url) true)
        (filter #(= "Футбол" (:sport %)))
        (filter #(= today (.getDayOfYear (java.time.ZonedDateTime/parse (:start %)))))
-       (remove #(re-find #"Russia|Brasil|Saudi|Austria|Ukraine" (:league_en %)))
+       (remove #(= "Россия" (:country %)))
        (map #(select-keys % [:stream :stream_smart :home_en :away_en :home_logo :away_logo])))))
 
 (defn fetch-and-get-m3u8 [stream-link]
