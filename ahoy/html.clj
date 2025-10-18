@@ -22,7 +22,7 @@
            home_en :home_en away_en :away_en
            home_logo :home_logo away_logo :away_logo}]
        [:li
-        [:a {:href (str "/" (or stream_smart stream))}
+        [:a {:href (or stream_smart stream)}
          [:img {:src home_logo :alt away_en}]
          (str home_en " - " away_en)
          [:img {:src away_logo :alt away_en}]]])
